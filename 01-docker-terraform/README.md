@@ -8,4 +8,4 @@ What's the version of `pip` in the image?
 
 **Step 2:** Inside the container, execute `pip --version`
 
-**Answer: ** 25.3
+**Answer:** 25.3
