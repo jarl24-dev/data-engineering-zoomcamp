@@ -55,3 +55,113 @@ volumes:
 If multiple answers are correct, select any 
 
 **Answer:** Both postgres:5432 or db:5432 are correct, the hostname can be the name of the service or the name of the container. In case of the port '5433:5432', 5432 refers to the access to postgres inside the container, 5433 outside
+
+## Prepare the Data
+
+Download the green taxi trips data for November 2025:
+
+```bash
+wget https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2025-11.parquet
+```
+
+You will also need the dataset with zones:
+
+```bash
+wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv
+```
+
+For this case, we create the container from de Dockerfile using the next command:
+
+```bash
+docker build -t taxi_ingest:v001 .
+```
+
+then, we execute the pipeline.py using the next docker command:
+
+```bash
+docker run -it   --network=01-docker-terraform_default   taxi_ingest:v001     --pg-user=postgres     --pg-pass=postgres     --pg-host=db     --pg-port=5432     --pg-db=ny_taxi     --target-table=green_tripdata
+```
+
+## Question 3. Counting short trips
+
+For the trips in November 2025 (lpep_pickup_datetime between '2025-11-01' and '2025-12-01', exclusive of the upper bound), how many trips had a `trip_distance` of less than or equal to 1 mile?
+
+- 7,853
+- 8,007
+- 8,254
+- 8,421
+
+**Answer:** 8,007
+
+```sql
+select count(*) from green_tripdata
+where lpep_pickup_datetime between '2025-11-01' and '2025-12-01'
+and trip_distance <= 1.0
+```
+
+## Question 4. Longest trip for each day
+
+Which was the pick up day with the longest trip distance? Only consider trips with `trip_distance` less than 100 miles (to exclude data errors).
+
+Use the pick up time for your calculations.
+
+- 2025-11-14
+- 2025-11-20
+- 2025-11-23
+- 2025-11-25
+
+**Answer:** 2025-11-14
+
+```sql
+select * from green_tripdata 
+where trip_distance = (select max(trip_distance) 
+from green_tripdata where trip_distance <= 100)
+```
+
+## Question 5. Biggest pickup zone
+
+Which was the pickup zone with the largest `total_amount` (sum of all trips) on November 18th, 2025?
+
+- East Harlem North
+- East Harlem South
+- Morningside Heights
+- Forest Hills
+
+**Answer:** East Harlem North
+
+```sql
+SELECT z."Zone", SUM(g."total_amount")
+FROM green_tripdata g
+INNER JOIN taxi_zone_lookup z
+ON g."PULocationID" = z."LocationID"
+GROUP BY z."Zone"
+ORDER BY SUM(g."total_amount") DESC
+LIMIT 1
+```
+
+## Question 6. Largest tip
+
+For the passengers picked up in the zone named "East Harlem North" in November 2025, which was the drop off zone that had the largest tip?
+
+Note: it's `tip` , not `trip`. We need the name of the zone, not the ID.
+
+- JFK Airport
+- Yorkville West
+- East Harlem North
+- LaGuardia Airport
+
+**Answer:** Yorkville West
+
+```sql
+SELECT zdo."Zone", MAX(g."tip_amount")
+FROM green_tripdata g
+INNER JOIN taxi_zone_lookup zpu
+ON g."PULocationID" = zpu."LocationID"
+INNER JOIN taxi_zone_lookup zdo
+ON g."DOLocationID" = zdo."LocationID"
+WHERE zpu."Zone" = 'East Harlem North'
+AND g."lpep_pickup_datetime" between '2025-11-01' and '2025-12-01'
+GROUP BY zdo."Zone"
+ORDER BY MAX(g."tip_amount") DESC
+LIMIT 1
+```
