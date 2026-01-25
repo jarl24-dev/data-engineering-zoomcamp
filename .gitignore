@@ -226,6 +226,7 @@ __marimo__/
 **/.terraform.tfstate.lock.info
 **/crash.log
 
+
 # SEGURIDAD: Ignorar llaves JSON de Google Cloud
 **/*.json
 

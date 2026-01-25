@@ -1,6 +1,6 @@
 # Data Engineering Zoomcamp – Homework 1
 
-![Terraform](https://img.shields.io/badge/Terraform-AWS-623CE4?logo=terraform)
+![Terraform](https://img.shields.io/badge/Terraform-GCP-623CE4?logo=terraform)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
 
