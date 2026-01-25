@@ -206,5 +206,29 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-#Avoid ignoring data files
 *.parquet
+
+###########################################
+# TERRAFORM (Optimizado para GCP)
+###########################################
+# Ignora carpetas .terraform en cualquier subnivel
+**/.terraform/
+
+# Ignora archivos de estado y sus backups en cualquier nivel
+**/*.tfstate
+**/*.tfstate.*
+
+# Ignora archivos de variables sensibles
+**/*.tfvars
+**/*.tfvars.json
+
+# Ignora archivos temporales y logs de error
+**/.terraform.tfstate.lock.info
+**/crash.log
+
+# SEGURIDAD: Ignorar llaves JSON de Google Cloud
+**/*.json
+
+# OPCIONAL: Si quieres subir el lock file, NO lo pongas aquí.
+# Si prefieres ignorarlo, descomenta la siguiente línea:
+# .terraform.lock.hcl
