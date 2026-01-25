@@ -1,3 +1,13 @@
+# Data Engineering Zoomcamp – Homework 1
+
+![Terraform](https://img.shields.io/badge/Terraform-AWS-623CE4?logo=terraform)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)
+![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
+
+## Overview
+
+This repository contains **Homework 1 solution** for the Data Engineering Zoomcamp
+
 ## Question 1. Understanding Docker images
 
 Run docker with the `python:3.13` image. Use an entrypoint `bash` to interact with the container.
