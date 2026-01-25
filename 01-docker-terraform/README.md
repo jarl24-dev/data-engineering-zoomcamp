@@ -80,7 +80,7 @@ You will also need the dataset with zones:
 wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv
 ```
 
-For this case, we create the container from de Dockerfile using the next command:
+For this case, we create the container from the Dockerfile using the next command:
 
 ```bash
 docker build -t taxi_ingest:v001 .
