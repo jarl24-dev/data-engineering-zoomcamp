@@ -48,7 +48,7 @@ Complete the quiz shown below. It's a set of 6 multiple-choice questions to test
 - 18,324,219
 - 29,430,127
 
-**Answer:** 1,925,152
+**Answer:** 24,648,499
 
 4) How many rows are there for the `Green` Taxi data for all CSV files in the year 2020?
 - 5,327,301
