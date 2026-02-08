@@ -229,6 +229,7 @@ __marimo__/
 
 # SEGURIDAD: Ignorar llaves JSON de Google Cloud
 **/*.json
+*.json
 
 # OPCIONAL: Si quieres subir el lock file, NO lo pongas aquí.
 # Si prefieres ignorarlo, descomenta la siguiente línea:
