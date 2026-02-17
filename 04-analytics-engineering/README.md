@@ -235,6 +235,8 @@ dbt build --select +stg_fhv_tripdata
 SELECT COUNT(*)  FROM `<PROJECT_ID>.<DEVELOPMENT_DATASET>.stg_fhv_tripdata`
 ```
 
+**Answer:** 43,244,693
+
 ---
 
 ## Submitting the solutions
