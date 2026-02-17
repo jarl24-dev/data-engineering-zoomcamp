@@ -98,3 +98,22 @@ sources:
             description: Improvement surcharge
           - name: total_amount
             description: Total amount charged
+      - name: fhv_tripdata
+        description: Raw FHV taxi trip records
+        loaded_at_field: pickup_datetime
+        columns:
+          - name: dispatching_base_num
+            description: identifier 
+          - name: pickup_datetime
+            description: Date and time when the meter was engaged
+          - name: dropOff_datetime
+            description: Date and time when the meter was disengaged
+          - name: PUlocationID
+            description: TLC Taxi Zone where the meter was engaged	
+          - name: DOlocationID
+            description: TLC Taxi Zone where the meter was disengaged
+          - name: SR_Flag
+            description: integer number flag
+          - name: Affiliated_base_number
+            description: Identifier
+      
