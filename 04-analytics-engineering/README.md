@@ -173,6 +173,68 @@ AS
 SELECT * FROM `<PROJECT_ID>.nytaxi.external_fhv_tripdata`;;
 ```
 
+3. Modify the source.yml file adding the new table:
+
+```yaml
+      - name: fhv_tripdata
+        columns:
+          - name: dispatching_base_num
+            description: identifier 
+          - name: pickup_datetime
+            description: Date and time when the meter was engaged
+          - name: dropOff_datetime
+            description: Date and time when the meter was disengaged
+          - name: PUlocationID
+            description: TLC Taxi Zone where the meter was engaged	
+          - name: DOlocationID
+            description: TLC Taxi Zone where the meter was disengaged
+          - name: SR_Flag
+            description: integer number flag
+          - name: Affiliated_base_number
+            description: Identifier
+```
+
+4. Create `stg_fhv_tripdata.sql` inside the staging directory:
+
+```SQL
+with source as (
+    select * from {{ source('raw', 'fhv_tripdata') }}
+),
+
+renamed as (
+
+    select
+        -- identifiers
+        cast(dispatching_base_num as string) as dispatching_base_num,
+        cast(pulocationid as integer) as pickup_location_id,
+        cast(dolocationid as integer) as dropoff_location_id,
+        cast(affiliated_base_number as string) as affiliated_base_number,
+
+        --timestamp
+        cast(pickup_datetime as timestamp) as pickup_datetime,
+        cast(dropoff_datetime as timestamp) as dropoff_datetime,
+
+        -- trip info
+        cast(sr_flag as string) as sr_flag
+    from source
+    WHERE dispatching_base_num IS NOT NULL
+)
+
+select * from renamed;
+```
+
+5. Execute the next command on dbt to load data into the development dataset:
+
+```bash
+dbt build --select +stg_fhv_tripdata
+```
+
+6. Verify that data was loaded into the development dataset on Bigquery and then execute the next query:
+
+```SQL
+SELECT COUNT(*)  FROM `<PROJECT_ID>.<DEVELOPMENT_DATASET>.stg_fhv_tripdata`
+```
+
 ---
 
 ## Submitting the solutions
