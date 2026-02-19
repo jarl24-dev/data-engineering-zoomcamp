@@ -173,7 +173,7 @@ AS
 SELECT * FROM `<PROJECT_ID>.nytaxi.external_fhv_tripdata`;;
 ```
 
-3. Modify the source.yml file adding the new table:
+3. Modify the `source.yml` file adding the new table:
 
 ```yaml
       - name: fhv_tripdata
