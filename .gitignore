@@ -235,3 +235,7 @@ __marimo__/
 # OPCIONAL: Si quieres subir el lock file, NO lo pongas aquí.
 # Si prefieres ignorarlo, descomenta la siguiente línea:
 # .terraform.lock.hcl
+.bruin.yml
+logs/runs
+logs/*.log
+*.py[cod]
