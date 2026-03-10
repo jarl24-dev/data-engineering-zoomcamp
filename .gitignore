@@ -452,3 +452,13 @@ __marimo__/
 .dlt/config.toml.bak
 .dlt/*.state
 .dlt/.var/
+
+# Ignorar archivos temporales de Spark/Hadoop
+.part-*.crc
+._SUCCESS.crc
+_SUCCESS
+
+# Ignorar archivos Parquet específicos si no quieres borrar toda la carpeta data
+*.parquet
+*.snappy.parquet
+*.csv
